@@ -41,10 +41,13 @@ const flowerThemes = [
   },
 ];
 
-const motivationLines = [
+const kohliLines = [
   "Self-belief and hard work always shine.",
   "Stay strong, stay disciplined, and keep going.",
   "Champions rise again, no matter what.",
+];
+
+const yashLines = [
   "Walk with confidence. Your vibe matters.",
   "Power is quiet, calm, and fearless.",
   "Own your story with style and strength.",
@@ -63,15 +66,8 @@ const phases = [
   { key: "bye", duration: 3000 },
 ];
 
-const allImages = [
-  "/image1.jpg",
-  "/image2.jpg",
-  "/image3.jpg",
-  "/image4.jpg",
-  "/image5.jpg",
-  "/image6.jpg",
-  "/image7.jpg",
-];
+const kohliImages = ["/kohli.jpg"];
+const yashImages = ["/yash.jpg"];
 
 function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -83,12 +79,7 @@ function FloatingParticle({ item, delay, x, size }) {
       className="floating-particle"
       initial={{ opacity: 0, y: 40, x }}
       animate={{ opacity: [0, 1, 1, 0], y: -260, x: x + 20 }}
-      transition={{
-        duration: 5.5,
-        repeat: Infinity,
-        delay,
-        ease: "easeInOut",
-      }}
+      transition={{ duration: 5.5, repeat: Infinity, delay, ease: "easeInOut" }}
       style={{ left: `${50 + x / 8}%`, bottom: "-20px", fontSize: size }}
     >
       {item}
@@ -100,11 +91,8 @@ function FlowerBloom({ theme }) {
   const petals = Array.from({ length: 10 });
 
   return (
-    <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
-      <div
-        className="absolute h-72 w-72 rounded-full blur-3xl"
-        style={{ background: theme.glow }}
-      />
+    <div className="flower-stage">
+      <div className="flower-glow" style={{ background: theme.glow }} />
 
       {theme.particles.map((particle, i) => (
         <FloatingParticle
@@ -120,80 +108,66 @@ function FlowerBloom({ theme }) {
         initial={{ scale: 0.6, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.2 }}
-        className="relative flex items-center justify-center -translate-y-8"
+        className="flower-wrap"
       >
         {petals.map((_, i) => {
           const angle = i * 36;
           return (
             <motion.div
               key={i}
-              className="absolute h-28 w-16 rounded-full shadow-lg"
+              className="flower-petal"
               style={{
                 transformOrigin: "bottom center",
                 rotate: `${angle}deg`,
                 background: theme.petal,
               }}
-              initial={{ scaleY: 0.1, y: 20, opacity: 0.3 }}
+              initial={{ scaleY: 0.1, y: 20, opacity: 0.25 }}
               animate={{ scaleY: 1, y: -8, opacity: 1 }}
-              transition={{
-                duration: 1.4,
-                delay: i * 0.08,
-                ease: "easeOut",
-              }}
+              transition={{ duration: 1.4, delay: i * 0.08, ease: "easeOut" }}
             />
           );
         })}
 
         <motion.div
-          className="absolute h-16 w-16 rounded-full bg-gradient-to-br from-yellow-200 to-amber-400 shadow-xl"
+          className="flower-center"
           initial={{ scale: 0.2, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.8 }}
         />
 
         <motion.div
-          className="absolute top-28 h-36 w-3 rounded-full bg-gradient-to-b from-green-400 to-emerald-600"
+          className="flower-stem"
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 150, opacity: 1 }}
           transition={{ duration: 1.1, delay: 0.5 }}
         />
 
         <motion.div
-          className="absolute top-44 -left-10 h-14 w-8 rounded-full bg-gradient-to-br from-green-300 to-emerald-500"
-          style={{ rotate: "-35deg" }}
+          className="flower-leaf flower-leaf-left"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8, delay: 1 }}
         />
-
         <motion.div
-          className="absolute top-44 left-10 h-14 w-8 rounded-full bg-gradient-to-br from-green-300 to-emerald-500"
-          style={{ rotate: "35deg" }}
+          className="flower-leaf flower-leaf-right"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8, delay: 1.1 }}
         />
       </motion.div>
 
-      <div
-        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 text-center"
-        style={{
-          width: "max-content",
-          maxWidth: "90%",
-          color: theme.accent,
-        }}
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.4, duration: 0.8 }}
+        className="flower-title"
+        style={{ color: theme.accent }}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.8 }}
-        >
-          <div className="text-xl font-semibold tracking-wide md:text-2xl">
-            {theme.emoji} {theme.name}
-          </div>
-          <div className="mt-2 text-sm opacity-80">A little bloom for Chai</div>
-        </motion.div>
-      </div>
+        <div className="flower-title-main">
+          {theme.emoji} {theme.name}
+        </div>
+        <div className="flower-title-sub">A little bloom for Chai</div>
+      </motion.div>
     </div>
   );
 }
@@ -242,7 +216,10 @@ function MotivationCard({ line, image, alt }) {
   );
 }
 
-function MotivationScreen({ sisterLine, line, image }) {
+function MotivationScreen({ sisterLine, kohliLine, yashLine, show, image }) {
+  const isKohli = show === "kohli";
+  const line = isKohli ? kohliLine : yashLine;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -297,16 +274,18 @@ export default function App() {
   const [cycle, setCycle] = useState(0);
 
   const theme = useMemo(() => randomItem(flowerThemes), [cycle]);
-  const motivationLine = useMemo(() => randomItem(motivationLines), [cycle]);
+  const kohliLine = useMemo(() => randomItem(kohliLines), [cycle]);
+  const yashLine = useMemo(() => randomItem(yashLines), [cycle]);
+  const show = useMemo(() => (Math.random() > 0.5 ? "kohli" : "yash"), [cycle]);
   const sisterLine = useMemo(() => randomItem(sisterLines), [cycle]);
-  const motivationImage = useMemo(() => randomItem(allImages), [cycle]);
+  const motivationImage = useMemo(
+    () => (show === "kohli" ? randomItem(kohliImages) : randomItem(yashImages)),
+    [cycle, show]
+  );
 
   useEffect(() => {
     const current = phases[phaseIndex];
-
-    if (current.key === "bye") {
-      return undefined;
-    }
+    if (current.key === "bye") return undefined;
 
     const timer = setTimeout(() => {
       setPhaseIndex((prev) => prev + 1);
@@ -340,13 +319,12 @@ export default function App() {
           )}
 
           {phases[phaseIndex].key === "motivation" && (
-            <motion.div
-              key={`motivation-${cycle}`}
-              className="motivation-screen-wrap"
-            >
+            <motion.div key={`motivation-${cycle}`} className="motivation-screen-wrap">
               <MotivationScreen
                 sisterLine={sisterLine}
-                line={motivationLine}
+                kohliLine={kohliLine}
+                yashLine={yashLine}
+                show={show}
                 image={motivationImage}
               />
             </motion.div>
@@ -362,3 +340,4 @@ export default function App() {
     </div>
   );
 }
+
