@@ -99,7 +99,10 @@ function FlowerBloom({ theme }) {
 
   return (
     <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
-      <div className="absolute h-72 w-72 rounded-full blur-3xl" style={{ background: theme.glow }} />
+      <div
+        className="absolute h-72 w-72 rounded-full blur-3xl"
+        style={{ background: theme.glow }}
+      />
 
       {theme.particles.map((particle, i) => (
         <FloatingParticle
@@ -130,7 +133,11 @@ function FlowerBloom({ theme }) {
               }}
               initial={{ scaleY: 0.1, y: 20, opacity: 0.3 }}
               animate={{ scaleY: 1, y: -8, opacity: 1 }}
-              transition={{ duration: 1.4, delay: i * 0.08, ease: "easeOut" }}
+              transition={{
+                duration: 1.4,
+                delay: i * 0.08,
+                ease: "easeOut",
+              }}
             />
           );
         })}
@@ -167,15 +174,19 @@ function FlowerBloom({ theme }) {
       </motion.div>
 
       <div
-        className={`absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-center ${theme.accent}`}
-        style={{ width: "max-content", maxWidth: "90%" }}
+        className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-center"
+        style={{
+          width: "max-content",
+          maxWidth: "90%",
+          color: theme.accent,
+        }}
       >
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.8 }}
         >
-          <div className="text-xl md:text-2xl font-semibold tracking-wide whitespace-nowrap">
+          <div className="text-xl font-semibold tracking-wide md:text-2xl whitespace-nowrap">
             {theme.emoji} {theme.name}
           </div>
           <div className="mt-2 text-sm opacity-80">A little bloom for Chai</div>
