@@ -93,7 +93,6 @@ function FloatingParticle({ item, delay, x, size }) {
     </motion.div>
   );
 }
-
 function FlowerBloom({ theme }) {
   const petals = Array.from({ length: 10 });
 
@@ -174,7 +173,7 @@ function FlowerBloom({ theme }) {
       </motion.div>
 
       <div
-        className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-center"
+        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 text-center"
         style={{
           width: "max-content",
           maxWidth: "90%",
@@ -186,7 +185,7 @@ function FlowerBloom({ theme }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.8 }}
         >
-          <div className="text-xl font-semibold tracking-wide md:text-2xl whitespace-nowrap">
+          <div className="text-xl font-semibold tracking-wide md:text-2xl">
             {theme.emoji} {theme.name}
           </div>
           <div className="mt-2 text-sm opacity-80">A little bloom for Chai</div>
