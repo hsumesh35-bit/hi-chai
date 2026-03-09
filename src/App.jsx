@@ -66,8 +66,15 @@ const phases = [
   { key: "bye", duration: 3000 },
 ];
 
-const kohliImages = ["/kohli.jpg"];
-const yashImages = ["/yash.jpg"];
+const allImages = [
+  "/image1.jpg",
+  "/image2.jpg",
+  "/image3.jpg",
+  "/image4.jpg",
+  "/image5.jpg",
+  "/image6.jpg",
+  "/image7.jpg",
+];
 
 function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -216,10 +223,7 @@ function MotivationCard({ line, image, alt }) {
   );
 }
 
-function MotivationScreen({ sisterLine, kohliLine, yashLine, show, image }) {
-  const isKohli = show === "kohli";
-  const line = isKohli ? kohliLine : yashLine;
-
+function MotivationScreen({ sisterLine, line, image }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -274,14 +278,12 @@ export default function App() {
   const [cycle, setCycle] = useState(0);
 
   const theme = useMemo(() => randomItem(flowerThemes), [cycle]);
-  const kohliLine = useMemo(() => randomItem(kohliLines), [cycle]);
-  const yashLine = useMemo(() => randomItem(yashLines), [cycle]);
-  const show = useMemo(() => (Math.random() > 0.5 ? "kohli" : "yash"), [cycle]);
+ const motivationLine = useMemo(
+  () => randomItem([...kohliLines, ...yashLines]),
+  [cycle]
+);
   const sisterLine = useMemo(() => randomItem(sisterLines), [cycle]);
-  const motivationImage = useMemo(
-    () => (show === "kohli" ? randomItem(kohliImages) : randomItem(yashImages)),
-    [cycle, show]
-  );
+  const motivationImage = useMemo(() => randomItem(allImages), [cycle]);
 
   useEffect(() => {
     const current = phases[phaseIndex];
@@ -321,12 +323,10 @@ export default function App() {
           {phases[phaseIndex].key === "motivation" && (
             <motion.div key={`motivation-${cycle}`} className="motivation-screen-wrap">
               <MotivationScreen
-                sisterLine={sisterLine}
-                kohliLine={kohliLine}
-                yashLine={yashLine}
-                show={show}
-                image={motivationImage}
-              />
+  sisterLine={sisterLine}
+  line={motivationLine}
+  image={motivationImage}
+/>
             </motion.div>
           )}
 
