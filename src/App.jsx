@@ -41,13 +41,10 @@ const flowerThemes = [
   },
 ];
 
-const kohliLines = [
+const motivationLines = [
   "Self-belief and hard work always shine.",
   "Stay strong, stay disciplined, and keep going.",
   "Champions rise again, no matter what.",
-];
-
-const yashLines = [
   "Walk with confidence. Your vibe matters.",
   "Power is quiet, calm, and fearless.",
   "Own your story with style and strength.",
@@ -86,13 +83,19 @@ function FloatingParticle({ item, delay, x, size }) {
       className="floating-particle"
       initial={{ opacity: 0, y: 40, x }}
       animate={{ opacity: [0, 1, 1, 0], y: -260, x: x + 20 }}
-      transition={{ duration: 5.5, repeat: Infinity, delay, ease: "easeInOut" }}
+      transition={{
+        duration: 5.5,
+        repeat: Infinity,
+        delay,
+        ease: "easeInOut",
+      }}
       style={{ left: `${50 + x / 8}%`, bottom: "-20px", fontSize: size }}
     >
       {item}
     </motion.div>
   );
 }
+
 function FlowerBloom({ theme }) {
   const petals = Array.from({ length: 10 });
 
@@ -194,6 +197,7 @@ function FlowerBloom({ theme }) {
     </div>
   );
 }
+
 function GreetingScreen({ theme }) {
   return (
     <motion.div
@@ -293,16 +297,16 @@ export default function App() {
   const [cycle, setCycle] = useState(0);
 
   const theme = useMemo(() => randomItem(flowerThemes), [cycle]);
-  const motivationLine = useMemo(
-  () => randomItem([...kohliLines, ...yashLines]),
-  [cycle]
-);
+  const motivationLine = useMemo(() => randomItem(motivationLines), [cycle]);
   const sisterLine = useMemo(() => randomItem(sisterLines), [cycle]);
   const motivationImage = useMemo(() => randomItem(allImages), [cycle]);
 
   useEffect(() => {
     const current = phases[phaseIndex];
-    if (current.key === "bye") return undefined;
+
+    if (current.key === "bye") {
+      return undefined;
+    }
 
     const timer = setTimeout(() => {
       setPhaseIndex((prev) => prev + 1);
@@ -336,12 +340,15 @@ export default function App() {
           )}
 
           {phases[phaseIndex].key === "motivation" && (
-            <motion.div key={`motivation-${cycle}`} className="motivation-screen-wrap">
+            <motion.div
+              key={`motivation-${cycle}`}
+              className="motivation-screen-wrap"
+            >
               <MotivationScreen
-  sisterLine={sisterLine}
-  line={motivationLine}
-  image={motivationImage}
-/>
+                sisterLine={sisterLine}
+                line={motivationLine}
+                image={motivationImage}
+              />
             </motion.div>
           )}
 
