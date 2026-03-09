@@ -164,12 +164,11 @@ function FlowerBloom({ theme }) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
-        className="flower-title"
-        style={{ color: theme.accent }}
-      >
+  initial={{ opacity: 0, y: 18 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 1.4, duration: 0.8 }}
+  className={`absolute left-1/2 -translate-x-1/2 bottom-16 text-center ${theme.accent}`}
+>
         <div className="flower-title-main">
           {theme.emoji} {theme.name}
         </div>
