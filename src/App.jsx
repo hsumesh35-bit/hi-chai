@@ -175,15 +175,12 @@ function FlowerBloom({ theme }) {
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 1.4, duration: 0.8 }}
   >
-    <div className="text-xl md:text-2xl font-semibold tracking-wide whitespace-nowrap">
-      {theme.emoji} {theme.name}
-    </div>
-    <div className="mt-2 text-sm opacity-80">A little bloom for Chai</div>
-  </motion.div>
-</div>
-    <div className="mt-2 text-sm opacity-80">A little bloom for Chai</div>
-  </motion.div>
-</div>
+   <div className="text-xl md:text-2xl font-semibold tracking-wide whitespace-nowrap">
+            {theme.emoji} {theme.name}
+          </div>
+          <div className="mt-2 text-sm opacity-80">A little bloom for Chai</div>
+        </motion.div>
+      </div>
     </div>
   );
 }
