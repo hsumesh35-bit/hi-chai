@@ -166,6 +166,10 @@ function FlowerBloom({ theme }) {
       <div
   className={`absolute left-1/2 -translate-x-1/2 top-[72%] text-center ${theme.accent}`}
 >
+  <div
+  className={`absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-center ${theme.accent}`}
+  style={{ width: "max-content", maxWidth: "90%" }}
+>
   <motion.div
     initial={{ opacity: 0, y: 18 }}
     animate={{ opacity: 1, y: 0 }}
@@ -174,6 +178,9 @@ function FlowerBloom({ theme }) {
     <div className="text-xl md:text-2xl font-semibold tracking-wide whitespace-nowrap">
       {theme.emoji} {theme.name}
     </div>
+    <div className="mt-2 text-sm opacity-80">A little bloom for Chai</div>
+  </motion.div>
+</div>
     <div className="mt-2 text-sm opacity-80">A little bloom for Chai</div>
   </motion.div>
 </div>
